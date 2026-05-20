@@ -1,0 +1,2282 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{float}           % pour [H] dans les figures
+\usepackage{booktabs}        % pour les tableaux
+\usepackage{tikz}            % pour le schéma de flux section 7
+\usetikzlibrary{positioning} % pour node distance dans tikz
+\usepackage{caption}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{mdframed}
+\usepackage{setspace}
+\usepackage{parskip}
+
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, decorations.pathreplacing, calc}
+\pgfplotsset{compat=1.18}
+\geometry{margin=2.5cm}
+\usepackage{xcolor} % Make sure you have this loaded!
+\lstdefinelanguage{yaml}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    comment=[l]{\#},
+    commentstyle=\color{purple}\ttfamily,
+    stringstyle=\color{black}\ttfamily,
+    moredelim=**[il][\color{punct}{:}\color{delim}]{:},
+    morestring=[b]',
+    morestring=[b]"
+}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{F8F8F8}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+\title{Projet Big Data\\
+Analyse prédictive de la charge réseau et optimisation de la consommation énergétique en temps réel}
+\author{}
+\date{}
+% =========================
+% PACKAGES VISUELS PRO
+% =========================
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+% =========================
+% PAGE SETUP
+% =========================
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+% =========================
+% PALETTE DE COULEURS PRO
+% =========================
+\definecolor{primary}{RGB}{33, 97, 140}   % bleu professionnel
+\definecolor{secondary}{RGB}{46, 134, 193}
+\definecolor{accent}{RGB}{39, 174, 96}
+\definecolor{darkgray}{RGB}{70, 70, 70}
+
+% =========================
+% TITRES COLORÉS
+% =========================
+\titleformat{\section}
+  {\color{primary}\Large\bfseries}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\color{secondary}\large\bfseries}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\color{darkgray}\bfseries}
+  {\thesubsubsection}{1em}{}
+
+% =========================
+% LIENS CLIQUABLES PRO
+% =========================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    filecolor=secondary,
+    urlcolor=accent,
+    citecolor=primary
+}
+
+% =========================
+% BOITES (IMPORTANT POUR PROJETS BIG DATA)
+% =========================
+\newtcolorbox{infobox}{
+    colback=blue!5!white,
+    colframe=primary,
+    title=Information,
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{warningbox}{
+    colback=red!5!white,
+    colframe=red!70!black,
+    title=Attention,
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{codebox}{
+    colback=black!3!white,
+    colframe=black!60,
+    title=Code / JSON / Data,
+    fonttitle=\bfseries
+}
+\usepackage[table]{xcolor}
+
+\definecolor{primaryblue}{RGB}{52,152,219}
+\definecolor{successgreen}{RGB}{39,174,96}
+\definecolor{accentorange}{RGB}{243,156,18}
+\definecolor{warningred}{RGB}{231,76,60}
+
+
+\begin{document}
+
+
+
+\begin{titlepage}
+
+
+\begin{figure}
+    \centering
+    \label{fig:placeholder}
+\end{figure}
+\begin{center}
+
+% Upper part of the page. The '~' is needed because only works if a paragraph has started.
+
+\textsc{\LARGE Ecole nationale des sciences appliquées}\\[1.5cm]
+
+\textsc{\Large }\\[0.5cm]
+
+% Title
+\HRule \\[0.4cm]
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{ensa-logo-23-800.jpg}
+\begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{ensa-logo-23-800.jpg}
+    \end{figure}
+
+
+
+    
+        \caption{Enter Caption}
+    \label{fig:placeholder}
+\end{figure}
+{\huge \bfseriesProjet 
+Analyse prédictive de la charge réseau et optimisation
+de la consommation énergétique en temps réel\\[0.4cm] }
+
+\HRule \\[1.5cm]
+% --- AJOUTEZ CECI ---
+{\large \textbf{Filière : BDIA 1}} \\[1cm]
+% --------------------
+
+% Author and supervisor
+\begin{minipage}{0.45\textwidth}
+    \begin{flushleft} 
+        \emph{Réalisé par :}\\
+        \textsc{Mohamed Errahmouni}\\
+        \textsc{Ayoub El-moujahid}\\
+        \textsc{Hazem Douzi}\\
+        \textsc{Mohammed Hajji}\\
+        \textsc{Hicham Laiymani}
+     
+    \end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \begin{center} \large
+        \emph{Email :}\\
+        {\normalsize errahmouni.mohamed@etu.uae.ac.ma \\
+        Elmoujahid.ayoub@etu.uae.ac.ma \\
+        hamza.douazi@etu.uae.ac.ma \\
+        mohammed.hajji3@etu.uae.ac.ma\\
+        laymani.hichame@etu.uae.ac.ma
+        }
+        
+    \end{center}
+\end{minipage}
+\\
+
+\begin{center}
+    \large \emph{Encadré par :}\\
+    \vspace{0.2cm}
+    \fbox{
+        \parbox{0.5\textwidth}{
+            \centering
+            \textbf{M. Imad Sassi }
+        }
+    }
+\end{center}
+
+
+
+
+\vfill
+
+% Bottom of the page
+{A.U 2025-2026}
+
+\end{center}
+\end{titlepage}
+
+
+
+
+
+\chapter*{Dédicaces et Remerciements}
+\addcontentsline{toc}{chapter}{Dédicaces et Remerciements}
+
+\begin{center}
+\textit{Louange à Dieu, le Tout Miséricordieux, le Très Miséricordieux, qui nous a guidés et nous a accordé la force et la persévérance pour mener à bien ce travail.}
+\end{center}
+
+\vspace{0.4cm}
+
+\noindent C'est avec une profonde gratitude et une immense fierté que nous dédions ce modeste projet, fruit d'un travail d'équipe intense et passionné :
+
+\begin{itemize}
+    \item \textbf{À Sa Majesté le Roi Mohammed VI}, que Dieu L'assiste et Le glorifie, pour Sa vision éclairée et Son soutien constant à l'excellence académique, à l'innovation technologique et à la formation de la jeunesse marocaine.
+    \item \textbf{À nos très chers parents}, qui ont été nos premiers enseignants et nos piliers inébranlables. Aucun mot ne saurait exprimer notre reconnaissance pour vos sacrifices infinis, vos prières quotidiennes et votre soutien moral et matériel. Ce travail est le couronnement de votre dévouement. Que Dieu vous préserve, vous accorde une longue vie et une santé de fer.
+    \item \textbf{À nos familles respectives}, pour leur patience, leurs encouragements constants et leur présence réconfortante tout au long de notre parcours universitaire.
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\rule{\textwidth}{0.5pt}
+\vspace{0.3cm}
+
+\noindent Par ailleurs, l'aboutissement de ce projet de fin d'année n'aurait pas été possible sans l'appui, les conseils et la bienveillance de plusieurs personnes que nous tenons à remercier chaleureusement.
+
+\vspace{0.3cm}
+
+\noindent Nous exprimons notre plus haute gratitude et nos sincères remerciements à notre honorable encadrant, le \textbf{Professeur Imad Sassi}. Nous le remercions profondément pour la confiance qu'il nous a accordée, pour sa disponibilité constante malgré ses nombreuses responsabilités, ainsi que pour la rigueur de ses orientations scientifiques et techniques. Ses critiques constructives et sa vision nous ont permis de surmonter les défis techniques majeurs de ce projet et d'élever la qualité de nos travaux.
+
+\vspace{0.3cm}
+
+\noindent Nos remerciements s'adressent également à l'ensemble du corps professoral et administratif de l'\textbf{École Nationale des Sciences Appliquées de Tétouan (ENSA Tétouan)}. Nous sommes reconnaissants pour la qualité de la formation que nous recevons et pour l'environnement académique stimulant qui nous pousse chaque jour à nous dépasser dans les domaines de l'ingénierie.
+
+\vspace{0.3cm}
+
+\noindent Nous tenons aussi à exprimer notre reconnaissance aux membres du jury qui ont accepté de consacrer de leur temps précieux à l'évaluation de notre travail. Leurs remarques et suggestions seront assurément d'une grande valeur pour enrichir nos connaissances et perfectionner notre profil d'ingénieur.
+
+\vspace{0.3cm}
+
+\noindent Enfin, nous remercions toutes les personnes qui, de près ou de loin, ont partagé avec nous leurs connaissances ou nous ont apporté une aide logistique ou morale durant la réalisation de ce pipeline.
+
+\vspace{1cm}
+
+\begin{flushright}
+\textbf{Les Membres de l'Équipe du Projet}
+\end{flushright}
+\newpage
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction générale}
+
+\section{Introduction}
+
+Avec la croissance rapide de la population urbaine, l’augmentation des besoins énergétiques et l’intégration progressive des énergies renouvelables, la gestion intelligente des réseaux électriques est devenue un défi majeur pour les fournisseurs d’énergie. Les réseaux traditionnels ne sont plus suffisants pour répondre efficacement aux variations dynamiques de la consommation électrique, ce qui peut entraîner des surcharges, des coupures de courant ainsi qu’une mauvaise répartition de l’énergie.
+
+L’émergence des Smart Grids et des compteurs intelligents (Smart Meters) offre aujourd’hui une opportunité importante pour collecter des données massives en temps réel sur la consommation énergétique des utilisateurs. Ces données, combinées à d’autres sources externes telles que les données météorologiques, les prix du marché énergétique et les incidents techniques signalés par les utilisateurs, permettent de construire des systèmes prédictifs capables d’anticiper la demande électrique et d’optimiser la distribution énergétique.
+
+Dans ce contexte, notre projet intitulé \textbf{« Analyse prédictive de la charge réseau et optimisation de la consommation énergétique en temps réel »} vise à concevoir une architecture Big Data complète permettant la collecte, le traitement, le stockage et l’analyse en temps réel de grands volumes de données énergétiques.
+
+Le projet repose sur plusieurs technologies Big Data et Intelligence Artificielle. Apache Kafka est utilisé pour l’ingestion continue des flux de données provenant des compteurs intelligents. Apache Spark Structured Streaming permet le traitement distribué et l’agrégation des données en temps réel. Une base de données NoSQL assure le stockage rapide et scalable des informations collectées. Par ailleurs, plusieurs modèles de Machine Learning et de Deep Learning sont développés et comparés afin de prédire la consommation énergétique avec précision tout en évaluant leurs performances selon différentes métriques.
+
+En complément, un tableau de bord interactif est mis en place afin de visualiser en temps réel les indicateurs clés, les prédictions de consommation ainsi que les alertes de surcharge potentielles.
+
+L’objectif principal de ce projet est donc de proposer une solution intelligente capable d’améliorer la gestion énergétique, réduire les risques de panne, optimiser la distribution de l’électricité et contribuer à une meilleure intégration des énergies renouvelables dans les réseaux modernes.
+
+Dans ce rapport, nous présenterons successivement l’architecture proposée, les technologies utilisées, la méthodologie de traitement des données, les modèles prédictifs développés ainsi que les résultats obtenus.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Objectifs du projet}
+
+L’objectif principal de ce projet est de concevoir et déployer une architecture Big Data locale capable de simuler, collecter, traiter, analyser et visualiser des données énergétiques en temps réel afin d’optimiser la gestion de la consommation électrique et d’anticiper les surcharges du réseau.
+
+Plus spécifiquement, ce projet vise à :
+
+\begin{itemize}
+    \item Simuler un réseau de 91 000 compteurs intelligents (Smart Meters) répartis sur 18 quartiers de la ville de Tétouan afin de reproduire un environnement énergétique réaliste.
+    
+    \item Structurer l’architecture de collecte en organisant les capteurs selon une hiérarchie composée de distributeurs et de concentrateurs.
+    
+    \item Assurer l’ingestion continue des flux de données en temps réel à l’aide de Apache Kafka.
+    
+    \item Réaliser l’agrégation et le traitement des données en streaming via Apache Spark Structured Streaming.
+    
+    \item Stocker efficacement les données traitées dans MongoDB pour garantir une gestion flexible et rapide des volumes importants de données.
+    
+    \item Évaluer et améliorer la qualité des données en identifiant les valeurs manquantes, les anomalies et les incohérences.
+    
+    \item Développer et comparer plusieurs modèles de Machine Learning pour prédire la consommation énergétique future.
+    
+    \item Exploiter les techniques de Traitement Automatique du Langage Naturel (NLP) afin d’analyser les rapports techniques et détecter les incidents réseau.
+    
+    \item Concevoir un dashboard interactif permettant de visualiser en temps réel les indicateurs de consommation, les prédictions et les alertes énergétiques.
+    
+    \item Fournir une solution intelligente capable d’améliorer la prise de décision des gestionnaires de réseaux électriques et de favoriser une distribution énergétique plus efficace.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Architecture globale du système}
+
+Notre solution repose sur une architecture Big Data orientée streaming en temps réel, déployée initialement dans un environnement local à l’aide de Docker Compose afin de simplifier l’orchestration des différents services.
+
+L’objectif de cette architecture est de permettre la collecte continue des données énergétiques, leur traitement en temps réel, leur stockage ainsi que leur exploitation à travers des modèles d’analyse prédictive et un tableau de bord interactif.
+
+\section{Flux global}
+
+\textbf{Smart Meters / Weather Data / RSS Reports}
+
+$\rightarrow$ Apache Kafka
+
+$\rightarrow$ Apache Spark Structured Streaming
+
+$\rightarrow$ MongoDB
+
+$\rightarrow$ Machine Learning / NLP Analytics
+
+$\rightarrow$ Dashboard Streamlit
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Smart Meter Simulator}
+
+\subsection{Définition}
+
+Les smart meters sont des compteurs intelligents permettant de mesurer la consommation électrique en temps réel.
+
+Dans notre projet, nous avons simulé :
+
+\begin{itemize}
+    \item 91 000 compteurs intelligents
+    \item répartis sur 18 quartiers de Tétouan
+    \item organisés selon une structure hiérarchique :
+    \begin{itemize}
+        \item Smart Meter
+        \item Concentrateur
+        \item Distributeur
+    \end{itemize}
+\end{itemize}
+
+\subsection{Fonctionnement}
+
+Chaque compteur génère :
+
+\begin{itemize}
+    \item consommation électrique
+    \item tension
+    \item courant
+    \item timestamp
+    \item localisation
+    \item identifiant du quartier
+\end{itemize}
+
+Les données sont générées automatiquement via un script Python qui envoie les messages vers Kafka.
+
+\subsection{Exemple}
+
+\begin{verbatim}
+{
+  "meter_id": 1025,
+  "district": "Martil",
+  "consumption_kwh": 12.4,
+  "voltage": 220,
+  "timestamp": "2026-05-17 10:00:00"
+}
+\end{verbatim}
+
+\subsection{Installation / Configuration}
+
+\begin{verbatim}
+pip install kafka-python pandas faker
+python smart_meter_producer.py
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Weather Producer}
+
+\subsection{Définition}
+
+Les conditions météorologiques influencent directement la consommation énergétique :
+
+\begin{itemize}
+    \item température élevée → climatisation
+    \item température basse → chauffage
+    \item humidité
+    \item nébulosité
+\end{itemize}
+
+\subsection{Configuration}
+
+\begin{verbatim}
+python weather_producer.py
+\end{verbatim}
+
+Topic Kafka :
+
+\begin{verbatim}
+weather_topic
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{RSS Producer}
+
+\subsection{Définition}
+
+Ce composant récupère ou simule des rapports techniques :
+
+\begin{itemize}
+    \item incidents industriels
+    \item maintenance réseau
+    \item pannes techniques
+    \item feedback clients
+\end{itemize}
+
+\subsection{Installation}
+
+\begin{verbatim}
+pip install feedparser requests
+python rss_producer.py
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Apache Kafka}
+
+\subsection{Topics utilisés}
+
+\begin{itemize}
+    \item smart\_meter\_topic
+    \item weather\_topic
+    \item rss\_topic
+\end{itemize}
+
+\subsection{Installation}
+
+\begin{verbatim}
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+\end{verbatim}
+
+Création topic :
+
+\begin{verbatim}
+bin/kafka-topics.sh --create \
+--topic smart_meter_topic \
+--bootstrap-server localhost:9092
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Apache Spark Structured Streaming}
+
+\subsection{Installation}
+
+\begin{verbatim}
+pip install pyspark
+spark-submit spark_streaming.py
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{MongoDB}
+
+\subsection{Installation}
+
+\begin{verbatim}
+docker-compose up mongodb
+\end{verbatim}
+
+Ou :
+
+\begin{verbatim}
+sudo systemctl start mongod
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analytics Job (Machine Learning + NLP)}
+
+\subsection{Machine Learning}
+
+\begin{itemize}
+    \item Random Forest
+    \item XGBoost
+    \item LSTM
+\end{itemize}
+
+Comparaison :
+
+\begin{itemize}
+    \item Accuracy
+    \item Recall
+    \item F1-score
+    \item temps d’inférence
+\end{itemize}
+
+\subsection{NLP}
+
+\begin{itemize}
+    \item TF-IDF
+    \item sentiment analysis
+    \item classification
+\end{itemize}
+
+\subsection{Installation}
+
+\begin{verbatim}
+pip install scikit-learn tensorflow nltk
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Dashboard Streamlit}
+
+\subsection{Fonctionnalités}
+
+\begin{itemize}
+    \item consommation temps réel
+    \item heatmaps
+    \item alertes
+    \item prédictions
+    \item nuage de mots NLP
+\end{itemize}
+
+\subsection{Installation}
+
+\begin{verbatim}
+pip install streamlit plotly
+streamlit run app.py
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Déploiement distribué final (Cluster multi-machines)}
+
+Dans la phase finale du projet, nous avons étendu l’architecture locale vers une architecture distribuée en connectant les ordinateurs des membres du groupe dans un cluster local multi-nœuds.
+
+Chaque machine joue un rôle spécifique :
+
+\begin{itemize}
+    \item PC 1 → Kafka + Zookeeper
+    \item PC 2 → Spark Master
+    \item PC 3 → Spark Worker 1
+    \item PC 4 → MongoDB
+    \item PC 5 → Dashboard + modèles ML
+\end{itemize}
+
+\subsection{Avantages}
+
+\begin{itemize}
+    \item répartition de charge
+    \item traitement parallèle
+    \item meilleure performance
+    \item simulation d’un environnement Big Data réel
+    \item travail collaboratif simultané
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Simulation des données énergétiques}
+
+\section{Simulation des données énergétiques}
+
+\subsection{Contexte de simulation}
+Afin de reproduire un environnement réaliste de Smart Grid, un simulateur de réseau électrique est mis en place pour la ville de Tétouan, modélisant une architecture hiérarchique de collecte et d’agrégation des données énergétiques en temps réel.
+
+Le système simule le comportement de 91 000 smart meters distribués sur 18 quartiers, en intégrant des variations temporelles, des anomalies réseau, ainsi que des facteurs environnementaux.
+
+\subsection{Architecture du réseau simulé}
+Le réseau est structuré selon une architecture multi-niveaux :
+
+\begin{itemize}
+\item \textbf{Niveau 1 : Smart Meters (91 000)}  
+Mesurent la consommation en temps réel.
+
+\item \textbf{Niveau 2 : Distributeurs (681)}  
+Agrègent les données des compteurs locaux.
+
+\item \textbf{Niveau 3 : Concentrateurs (18)}  
+Un concentrateur par quartier (agrégation régionale).
+
+\item \textbf{Niveau 4 : Centre de traitement (Data Lake / Kafka + Spark)}  
+Consommation des flux en streaming.
+\end{itemize}
+
+Flux de données :  
+Smart Meters $\rightarrow$ Distributeurs $\rightarrow$ Concentrateurs $\rightarrow$ Centre de traitement
+
+\subsection{Cycle de génération des données}
+Chaque cycle de simulation dure 15 minutes, décomposé comme suit :
+
+\begin{itemize}
+\item \textbf{Phase capteurs (Edge simulation) : 14 minutes}  
+Génération continue des mesures par les smart meters.
+
+\item \textbf{Phase agrégation : 1 minute}  
+Consolidation des données par distributeur puis concentrateur.
+\end{itemize}
+
+\subsection{Variables simulées}
+Chaque message généré est structuré au format JSON pour être directement ingéré par Kafka :
+
+\begin{verbatim}
+{
+  "meter_id": "MTR_XXXX",
+  "distributor_id": "DST_XX",
+  "concentrator_id": "CNT_XX",
+  "district": "Quartier_05",
+  "zone_type": "residential | industrial | commercial",
+  "energy_consumption_kwh": 0.0,
+  "voltage_v": 220,
+  "current_a": 0.0,
+  "power_kw": 0.0,
+  "timestamp": "2026-05-17T12:15:00Z",
+  "status": "normal | overload | outage"
+}
+\end{verbatim}
+
+\subsection{Modélisation statistique des données}
+Pour garantir un réalisme proche des réseaux électriques réels, les variables sont générées selon des distributions contrôlées :
+
+\begin{itemize}
+\item \textbf{Consommation énergétique}
+\begin{itemize}
+\item Distribution normale par type de zone :
+\begin{itemize}
+\item Résidentiel : moyenne faible, variance modérée
+\item Industriel : moyenne élevée, forte variance
+\item Commercial : pics horaires
+\end{itemize}
+\item Ajout d’une saisonnalité journalière :
+\begin{itemize}
+\item pic 08h–12h et 18h–22h
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Tension (Voltage)}
+\begin{itemize}
+\item Stable autour de 220V $\pm$ 5\%
+\item Chutes simulées lors des surcharges
+\end{itemize}
+
+\item \textbf{Courant}
+\begin{itemize}
+\item Corrélé à la consommation :
+\end{itemize}
+
+\[
+P = U \times I
+\]
+
+\item \textbf{Anomalies réseau}
+\begin{itemize}
+\item Injectées artificiellement (2\% à 5\% des données) :
+\begin{itemize}
+\item surcharge
+\item coupure
+\item fluctuations extrêmes
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\subsection{Intégration des facteurs externes}
+Le simulateur intègre des variables exogènes pour enrichir le modèle prédictif :
+
+\begin{itemize}
+\item Température (°C)
+\item Humidité (\%)
+\item Nébulosité
+\item Jour de la semaine / week-end
+\item Événements spéciaux (simulés)
+\end{itemize}
+
+Effet :
+\begin{itemize}
+\item augmentation de consommation en cas de forte chaleur (climatisation)
+\item baisse en période nocturne
+\end{itemize}
+
+\subsection{Génération de bruit et réalisme des données}
+Pour éviter des données trop “parfaites”, plusieurs mécanismes sont introduits :
+
+\begin{itemize}
+\item Valeurs manquantes (Missing Data) : 1–3\%
+\item Bruit de mesure (Gaussian noise) sur consommation
+\item Données retardées (latency simulation) pour Kafka streaming
+\item Outliers énergétiques (pics anormaux)
+\end{itemize}
+
+\subsection{Objectif pour le pipeline Big Data}
+Ces données sont directement conçues pour alimenter :
+
+\begin{itemize}
+\item Kafka Producer : simulation en temps réel des smart meters
+\item Spark Structured Streaming : agrégation par fenêtre de 15 min
+\item Base NoSQL (Cassandra / MongoDB) : stockage scalable
+\item Modèles IA : prédiction de charge et détection d’anomalies
+\end{itemize}
+
+\subsection{Résultat attendu de la simulation}
+Le simulateur permet de générer :
+
+\begin{itemize}
+\item un flux continu de données temps réel (high velocity)
+\item un dataset multi-niveau (hierarchique)
+\item des événements normaux + anomalies
+\item des patterns exploitables pour ML/DL
+\end{itemize}
+% ============================================================
+% SECTION 5 — Ingestion des données avec Kafka
+% ============================================================
+
+\chapter{Ingestion des données avec Kafka}
+
+\section{Rôle de Kafka dans l'architecture}
+
+Apache Kafka constitue le \textbf{bus de messages central} du système. Il découple les producteurs de données
+(simulateur, météo, RSS) des consommateurs (Spark, MongoDB), garantissant ainsi une ingestion
+\textbf{asynchrone, scalable et tolérante aux pannes}. Chaque composant du pipeline interagit avec
+Kafka de manière indépendante, ce qui permet d'ajouter ou de retirer des producteurs ou
+consommateurs sans impacter le reste du système.
+
+Dans notre projet, Kafka est déployé en mode \textbf{KRaft} (Kafka Raft Metadata mode),
+une architecture sans ZooKeeper introduite dans les versions récentes de Kafka. Ce choix
+simplifie le déploiement en éliminant la dépendance à ZooKeeper et améliore la stabilité
+du cluster en unifiant la gestion des métadonnées directement dans Kafka.
+
+% ---------------------------------------------------------------
+% IMAGE 1 — Schéma des topics Kafka et leurs producteurs/consommateurs
+% Faire un schéma montrant : Simulator → topic_compteurs,
+% weather_producer → weather_data, rss_producer → rss_industrial_news
+% et les consumers Spark + kafka-to-mongo lisant depuis ces topics
+% ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=1\textwidth]{Schema.png}
+    \caption{Schéma des topics Kafka et flux de données entre producteurs et consommateurs}
+    \label{fig:kafka_topics}
+\end{figure}
+
+\section{Mode KRaft — Architecture sans ZooKeeper}
+
+En mode KRaft, le broker Kafka assume simultanément les rôles de \textbf{broker} et de
+\textbf{controller}, gérant lui-même le quorum de métadonnées via le protocole Raft.
+La configuration KRaft utilisée dans notre déploiement est la suivante :
+
+\begin{lstlisting}[language=bash, caption={Configuration Kafka KRaft dans Docker Compose}]
+KAFKA_NODE_ID: 1
+KAFKA_PROCESS_ROLES: broker,controller
+KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,
+                 CONTROLLER://0.0.0.0:9093,
+                 PLAINTEXT_HOST://0.0.0.0:9092
+KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,
+                             PLAINTEXT_HOST://localhost:9092
+\end{lstlisting}
+
+\section{Double Listener — Réseau interne et externe}
+
+Kafka est configuré avec \textbf{deux listeners distincts} afin de gérer la communication
+à l'intérieur et à l'extérieur du réseau Docker :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Listener} & \textbf{Adresse} & \textbf{Utilisé par} \\
+\hline
+\texttt{PLAINTEXT} & \texttt{kafka:29092} & Tous les containers Docker (interne) \\
+\hline
+\texttt{PLAINTEXT\_HOST} & \texttt{localhost:9092} & Accès depuis la machine hôte (externe) \\
+\hline
+\end{tabular}
+\caption{Configuration des listeners Kafka}
+\label{tab:kafka_listeners}
+\end{table}
+
+Cette séparation est essentielle dans une architecture Docker Compose : les containers
+communiquent entre eux via le réseau virtuel \texttt{energy-net} en utilisant le nom DNS
+\texttt{kafka:29092}, tandis que l'accès depuis le terminal de la machine virtuelle se fait
+via \texttt{localhost:9092}.
+
+\section{Topics Kafka}
+
+Le système utilise \textbf{cinq topics Kafka} répartis en deux catégories :
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Topic} & \textbf{Producteur} & \textbf{Description} \\
+\hline
+\texttt{smart\_meter\_readings} & Simulator & Lectures brutes des 91\,000 compteurs \\
+\hline
+\texttt{distributor\_aggregations} & Simulator & Agrégations par distributeur (681) \\
+\hline
+\texttt{district\_aggregations} & Simulator & Agrégations par quartier (18) \\
+\hline
+\texttt{weather\_data} & Weather Producer & Données météorologiques de Tétouan \\
+\hline
+\texttt{rss\_industrial\_news} & RSS Producer & Rapports techniques et industriels \\
+\hline
+\end{tabular}
+\caption{Topics Kafka du système}
+\label{tab:kafka_topics}
+\end{table}
+
+Les topics \texttt{smart\_meter\_readings}, \texttt{distributor\_aggregations} et
+\texttt{district\_aggregations} représentent les trois niveaux hiérarchiques du simulateur.
+Les topics \texttt{weather\_data} et \texttt{rss\_industrial\_news} enrichissent les
+données énergétiques avec des informations contextuelles.
+
+\section{Producteurs de données}
+
+\subsection{Simulateur de smart meters}
+
+Le simulateur est le principal producteur du système. Il génère les données
+de 91\,000 compteurs intelligents répartis dans 18 quartiers de Tétouan,
+organisés en 681 distributeurs. La génération suit un cycle de \textbf{15 minutes} :
+
+\begin{itemize}
+    \item \textbf{Phase de mesure simultanée (t=0)} : tous les 91\,000 compteurs génèrent
+    leurs mesures au même instant, simulant la synchronisation réelle d'un réseau smart grid.
+    \item \textbf{Phase de transmission progressive (14 minutes)} : les lectures sont envoyées
+    progressivement vers \texttt{smart\_meter\_readings} avec un intervalle de
+    $\frac{840}{91000} \approx 0{,}009$ secondes entre chaque message.
+    \item \textbf{Phase d'agrégation (1 minute)} : les distributeurs regroupent les données de
+    leurs compteurs et envoient les agrégations, puis les concentrateurs agrègent les
+    distributeurs par quartier.
+\end{itemize}
+
+Chaque message de compteur contient les champs suivants :
+
+\begin{lstlisting}[language=json, caption={Structure d'un message smart meter dans Kafka}]
+{
+  "meter_id":          "MED_00_042",
+  "distributor_id":    "DIST_Medina_00",
+  "district":          "Medina",
+  "zone_type":         "Commercial",
+  "latitude":          35.5712,
+  "longitude":         -5.3725,
+  "energy_consumption": 4.287,
+  "voltage":           226.4,
+  "current":           18.9,
+  "timestamp":         "2026-05-16T14:07:33.412",
+  "cycle":             3
+}
+\end{lstlisting}
+
+\subsection{Producteur météorologique}
+
+Le weather producer envoie toutes les \textbf{60 secondes} les conditions météorologiques
+de Tétouan vers le topic \texttt{weather\_data}. Ces données sont ensuite utilisées
+par Spark pour enrichir les agrégations énergétiques, car la température et l'humidité
+influencent directement la consommation électrique (climatisation, chauffage).
+
+\subsection{Producteur RSS}
+
+Le RSS producer génère toutes les \textbf{90 secondes} des rapports techniques et
+industriels vers le topic \texttt{rss\_industrial\_news}. Ces articles sont analysés
+par le module NLP pour détecter des événements pouvant impacter la stabilité du réseau
+(incidents, maintenances, événements météorologiques).
+
+\section{Consommateurs Kafka}
+
+Deux consommateurs lisent depuis les topics Kafka \textbf{simultanément et indépendamment},
+chacun avec son propre \texttt{group\_id} :
+
+\begin{itemize}
+    \item \textbf{kafka-to-mongo-consumer} : stocke les données brutes dans MongoDB telles
+    quelles, sans traitement. Sert de sauvegarde et permet la ré-analyse ultérieure.
+    \item \textbf{spark-streaming-job} : lit les mêmes topics en temps réel, agrège
+    et joint les données, puis écrit les résultats traités dans MongoDB.
+\end{itemize}
+
+Kafka maintient un \textbf{offset} indépendant par groupe de consommateurs, garantissant
+que les deux consommateurs reçoivent l'intégralité des messages sans interférence.
+
+% ---------------------------------------------------------------
+% IMAGE 2 — Capture du terminal montrant les messages Kafka
+% Faire tourner : kafka-console-consumer.sh --topic district_aggregations
+%                 --bootstrap-server localhost:9092
+% et capturer quelques messages JSON affichés
+% ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=1.1\textwidth]{kafka.png}
+    \caption{Messages reçus sur le topic \texttt{district\_aggregations} via kafka-console-consumer}
+    \label{fig:kafka_consumer_output}
+\end{figure}
+
+% ============================================================
+% SECTION 6 — Traitement Big Data avec Spark Structured Streaming
+% ============================================================
+
+\chapter{Traitement Big Data avec Spark Structured Streaming}
+
+\section{Rôle de Spark dans l'architecture}
+
+Apache Spark Structured Streaming est le \textbf{moteur de traitement en temps réel}
+du système. Contrairement à un traitement batch classique, Spark lit les données
+directement depuis les topics Kafka au fur et à mesure de leur arrivée, les traite
+et écrit les résultats dans MongoDB sans délai significatif.
+
+Spark occupe une position centrale dans le pipeline : il ne se contente pas de stocker
+les données brutes, mais les \textbf{transforme, agrège et enrichit} avant de les
+rendre disponibles pour les modèles ML/NLP et le dashboard.
+
+\section{Architecture du cluster Spark}
+
+Notre déploiement Docker Compose utilise l'image officielle \texttt{spark:3.5.6-python3}
+avec une architecture \textbf{Master/Worker} :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Container} & \textbf{Rôle} & \textbf{Port} \\
+\hline
+\texttt{spark-master} & Coordonne les tâches, expose l'UI & 8080 (UI), 7077 (cluster) \\
+\hline
+\texttt{spark-worker} & Exécute les calculs distribués & — \\
+\hline
+\texttt{spark-streaming-job} & Soumet le job PySpark & — \\
+\hline
+\end{tabular}
+\caption{Composants du cluster Spark}
+\label{tab:spark_cluster}
+\end{table}
+
+Le job est soumis au master via l'URL \texttt{spark://spark-master:7077}. Le master
+distribue les tâches au worker, qui effectue les calculs et retourne les résultats.
+
+% ---------------------------------------------------------------
+% IMAGE 3 — Capture de l'interface Spark UI (localhost:8080)
+% Ouvrir http://localhost:8080 pendant que Docker tourne
+% et capturer la page montrant le master actif et le worker connecté
+% ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.9\textwidth]{spark.png}
+    \caption{Interface Spark Master UI montrant le cluster actif avec un worker}
+    \label{fig:spark_ui}
+\end{figure}
+
+\section{Lecture des flux Kafka par Spark}
+
+Spark Structured Streaming traite chaque topic Kafka comme un \textbf{flux continu de données}.
+Les trois sources principales lues par Spark sont :
+
+\begin{lstlisting}[language=python, caption={Lecture des topics Kafka par Spark Structured Streaming}]
+# Lecture des donnees de compteurs
+meters_stream = spark.readStream \
+    .format("kafka") \
+    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVER) \
+    .option("subscribe", KAFKA_TOPIC_METERS) \
+    .option("startingOffsets", "latest") \
+    .load()
+
+# Lecture des donnees meteo
+weather_stream = spark.readStream \
+    .format("kafka") \
+    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVER) \
+    .option("subscribe", WEATHER_TOPIC) \
+    .load()
+
+# Lecture des rapports RSS
+rss_stream = spark.readStream \
+    .format("kafka") \
+    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVER) \
+    .option("subscribe", RSS_TOPIC) \
+    .load()
+\end{lstlisting}
+
+\section{Transformations et agrégations}
+
+\subsection{Agrégation par cycle et par quartier}
+
+Spark regroupe les lectures des compteurs par \texttt{cycle\_id} et \texttt{district}
+et calcule les métriques suivantes pour chaque fenêtre de 15 minutes :
+
+\begin{itemize}
+    \item \textbf{Consommation totale} : somme des \texttt{energy\_consumption} de tous
+    les compteurs du quartier.
+    \item \textbf{Tension moyenne} : moyenne des \texttt{voltage} sur l'ensemble des compteurs.
+    \item \textbf{Courant moyen} : moyenne des \texttt{current}.
+    \item \textbf{Nombre de compteurs traités} : comptage approximatif via
+    \texttt{approx\_count\_distinct()} — la fonction \texttt{countDistinct()} n'étant
+    pas supportée en mode streaming Spark.
+    \item \textbf{Comptage des surcharges} : nombre de compteurs dont la consommation
+    dépasse le seuil critique.
+    \item \textbf{Comptage des chutes de tension} : nombre de compteurs dont la tension
+    est inférieure à 210V.
+\end{itemize}
+
+\begin{lstlisting}[language=python, caption={Agrégation Spark par cycle et quartier}]
+aggregated = meters_df.groupBy("cycle_id", "district", "zone_type") \
+    .agg(
+        spark_sum("energy_consumption").alias("total_energy_consumption"),
+        spark_avg("voltage").alias("avg_voltage"),
+        spark_avg("current").alias("avg_current"),
+        approx_count_distinct("meter_id").alias("total_meters"),
+        spark_sum(
+            when(col("energy_consumption") > OVERLOAD_THRESHOLD, 1).otherwise(0)
+        ).alias("overload_count"),
+        spark_sum(
+            when(col("voltage") < VOLTAGE_DROP_THRESHOLD, 1).otherwise(0)
+        ).alias("voltage_drop_count")
+    )
+\end{lstlisting}
+
+\subsection{Détection des statuts de quartier}
+
+Sur la base des métriques agrégées, Spark attribue un \textbf{statut} à chaque quartier
+à chaque cycle :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Statut} & \textbf{Condition} \\
+\hline
+\texttt{overload\_risk} & overload\_count $>$ 0 \\
+\hline
+\texttt{voltage\_risk} & voltage\_drop\_count $>$ 0 et avg\_voltage $<$ 215V \\
+\hline
+\texttt{saturation\_risk} & overload\_count $>$ 0 et voltage\_drop\_count $>$ 0 \\
+\hline
+\texttt{normal} & Aucune anomalie détectée \\
+\hline
+\end{tabular}
+\caption{Statuts de quartier calculés par Spark}
+\label{tab:district_status}
+\end{table}
+
+\subsection{Suivi du statut de cycle}
+
+Spark maintient également un suivi du \textbf{statut d'avancement} de chaque cycle
+de 15 minutes. Un cycle est marqué \texttt{completed} uniquement lorsque les 18 quartiers
+ont été traités :
+
+\begin{lstlisting}[language=python, caption={Mise à jour du statut de cycle}]
+if district_count < 18:
+    cycle_status = "processing"
+else:
+    cycle_status = "completed"
+\end{lstlisting}
+
+Cette logique est nécessaire car les données des 18 quartiers n'arrivent pas simultanément :
+Spark les traite au fur et à mesure et met à jour le statut du cycle en conséquence.
+
+\subsection{Jointure avec les données météo}
+
+Spark enrichit les agrégations énergétiques avec les données météorologiques en joingnant
+les deux flux sur la dimension temporelle. La température, l'humidité et les conditions
+météo sont ainsi associées à chaque quartier pour chaque cycle, permettant au modèle ML
+d'incorporer ces facteurs environnementaux dans ses prédictions.
+
+\subsection{Génération des alertes}
+
+Lorsqu'un quartier dépasse les seuils critiques, Spark génère automatiquement une
+\textbf{alerte} stockée dans la collection \texttt{spark\_alerts} de MongoDB :
+
+\begin{itemize}
+    \item Surcharge : consommation anormalement élevée détectée sur un groupe de compteurs.
+    \item Chute de tension : tension inférieure à 210V sur un groupe de compteurs.
+    \item Saturation : cumul de surcharge et de chute de tension simultanées.
+\end{itemize}
+
+% ---------------------------------------------------------------
+% IMAGE 4 — Capture des logs du container spark-streaming-job
+% Lancer : docker logs spark-streaming-job --tail 40
+% et capturer les lignes montrant les agrégations et les cycles traités
+% ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.9\textwidth]{logs_de_spark.png}
+    \caption{Logs du job Spark Structured Streaming montrant le traitement des cycles}
+    \label{fig:spark_logs}
+\end{figure}
+
+\section{Écriture des résultats dans MongoDB}
+
+Spark écrit les résultats dans MongoDB via le connecteur officiel MongoDB Spark Connector.
+Les collections de sortie sont les suivantes :
+
+\begin{itemize}
+    \item \textbf{\texttt{spark\_district\_consumption}} : agrégation complète par
+    quartier et par cycle. C'est la collection principale utilisée par le module ML.
+    \item \textbf{\texttt{spark\_cycle\_metadata}} : statut et résumé de chaque cycle
+    (processing / completed, nombre de quartiers traités, timestamp).
+    \item \textbf{\texttt{spark\_alerts}} : alertes de surcharge et de chute de tension
+    générées en temps réel.
+\end{itemize}
+
+% ============================================================
+% SECTION 7 — Stockage dans MongoDB
+% ============================================================
+
+\chapter{Stockage dans MongoDB}
+
+\section{Choix de MongoDB}
+
+MongoDB a été sélectionné comme système de stockage pour plusieurs raisons
+adaptées à notre contexte Big Data :
+
+\begin{itemize}
+    \item \textbf{Flexibilité du schéma} : les documents JSON peuvent avoir des structures
+    variables selon leur source (capteurs, météo, RSS, prédictions ML), sans nécessiter
+    de migration de schéma.
+    \item \textbf{Performance en lecture/écriture} : MongoDB supporte des insertions massives
+    et des requêtes rapides sur de grands volumes de données non structurées.
+    \item \textbf{Compatibilité native JSON} : tous les messages Kafka et résultats Spark
+    sont au format JSON, nativement compatible avec les documents MongoDB (BSON).
+    \item \textbf{Intégration Spark} : le connecteur officiel MongoDB Spark Connector permet
+    une écriture directe depuis Spark Structured Streaming.
+    \item \textbf{Scalabilité horizontale} : MongoDB supporte le sharding et la réplication,
+    facilitant une future migration vers un cluster distribué.
+\end{itemize}
+
+\section{Déploiement}
+
+MongoDB est déployé via Docker avec l'image officielle \texttt{mongo:7}, exposée sur
+le port \texttt{27017}. Les données sont persistées dans un volume Docker nommé
+\texttt{mongo\_data}, garantissant que les données survivent aux redémarrages des containers :
+
+\begin{lstlisting}[language=yaml, caption={Configuration MongoDB dans Docker Compose}]
+mongodb:
+  image: mongo:7
+  container_name: mongodb
+  ports:
+    - "27017:27017"
+  volumes:
+    - mongo_data:/data/db
+  networks:
+    - energy-net
+\end{lstlisting}
+
+\section{Base de données et collections}
+
+Toutes les données sont stockées dans la base \textbf{\texttt{energy\_project}}.
+Le système utilise \textbf{dix collections} organisées selon leur rôle fonctionnel :
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Collection} & \textbf{Producteur} & \textbf{Contenu} \\
+\hline
+\texttt{spark\_district\_consumption} & Spark & Consommation agrégée par quartier/cycle \\
+\hline
+\texttt{spark\_cycle\_metadata} & Spark & Statut et résumé de chaque cycle \\
+\hline
+\texttt{spark\_alerts} & Spark & Alertes surcharge et chute de tension \\
+\hline
+\texttt{weather\_data} & Kafka consumer & Données météorologiques \\
+\hline
+\texttt{rss\_industrial\_news} & Kafka consumer & Rapports techniques RSS \\
+\hline
+\texttt{data\_quality\_reports} & Analytics job & Résultats du Data Quality Framework \\
+\hline
+\texttt{ml\_model\_metrics} & Analytics job & Métriques des 3 modèles ML \\
+\hline
+\texttt{ml\_predictions} & Analytics job & Prédictions du prochain cycle \\
+\hline
+\texttt{ml\_prediction\_comparisons} & Analytics job & Comparaison réel vs prédit \\
+\hline
+\texttt{nlp\_reports} & Analytics job & Résultats de l'analyse NLP des RSS \\
+\hline
+\end{tabular}
+\caption{Collections MongoDB du projet}
+\label{tab:mongo_collections}
+\end{table}
+
+\section{Structure des documents principaux}
+
+\subsection{Collection \texttt{spark\_district\_consumption}}
+
+C'est la collection centrale du système. Elle contient une entrée par quartier
+et par cycle, produite par Spark après agrégation de tous les compteurs :
+
+\begin{lstlisting}[language=json, caption={Document type — spark\_district\_consumption}]
+{
+  "_id":                    "ObjectId(...)",
+  "cycle_id":               5,
+  "district":               "Medina",
+  "zone_type":              "Commercial",
+  "latitude":               35.5712,
+  "longitude":              -5.3725,
+  "total_energy_consumption": 18432.5,
+  "avg_voltage":            226.4,
+  "avg_current":            21.3,
+  "total_meters":           5040,
+  "overload_count":         12,
+  "voltage_drop_count":     3,
+  "district_status":        "overload_risk",
+  "processed_at":           "2026-05-16T15:15:47Z"
+}
+\end{lstlisting}
+
+\subsection{Collection \texttt{ml\_predictions}}
+
+Cette collection stocke les prédictions générées par le meilleur modèle ML
+pour le cycle suivant :
+
+\begin{lstlisting}[language=json, caption={Document type — ml\_predictions}]
+{
+  "predicted_cycle_id":       6,
+  "based_on_cycle_id":        5,
+  "district":                 "Medina",
+  "zone_type":                "Commercial",
+  "predicted_consumption":    18915.2,
+  "latest_real_consumption":  18432.5,
+  "avg_voltage":              226.4,
+  "avg_current":              21.3,
+  "total_meters":             5040,
+  "prediction_generated_at":  "2026-05-16T15:16:02Z",
+  "source":                   "analytics_job"
+}
+\end{lstlisting}
+
+\subsection{Collection \texttt{ml\_prediction\_comparisons}}
+
+Après chaque cycle, le système compare automatiquement la prédiction
+avec la valeur réelle observée :
+
+\begin{lstlisting}[language=json, caption={Document type — ml\_prediction\_comparisons}]
+{
+  "cycle_id":              6,
+  "district":              "Medina",
+  "actual_consumption":    18731.8,
+  "predicted_consumption": 18915.2,
+  "absolute_error":        183.4,
+  "percentage_error":      0.979,
+  "compared_at":           "2026-05-16T15:31:05Z",
+  "source":                "analytics_job"
+}
+\end{lstlisting}
+
+\subsection{Collection \texttt{nlp\_reports}}
+
+Chaque rapport RSS analysé par le module NLP produit un document enrichi
+avec la catégorie prédite, le score de risque et la corrélation avec
+les anomalies physiques du réseau :
+
+\begin{lstlisting}[language=json, caption={Document type — nlp\_reports}]
+{
+  "district":                       "Jbel_Dersa",
+  "title":                          "Maintenance reseau electrique quartier nord",
+  "predicted_category":             "maintenance",
+  "severity":                       "medium",
+  "risk_score":                     0.525,
+  "correlated_with_physical_anomaly": true,
+  "latest_avg_voltage":             208.3,
+  "latest_voltage_drop_count":      7,
+  "latest_district_status":         "voltage_risk",
+  "analyzed_at":                    "2026-05-16T15:16:15Z"
+}
+\end{lstlisting}
+
+\section{Indexation}
+
+Des index sont créés sur les champs les plus fréquemment utilisés dans les
+requêtes du dashboard et du module ML, afin d'optimiser les temps de réponse :
+
+\begin{lstlisting}[language=python, caption={Création des index MongoDB}]
+collection.create_index([("district",    ASCENDING)])
+collection.create_index([("cycle_id",   ASCENDING)])
+collection.create_index([("charge_level", ASCENDING)])
+collection.create_index([("processed_at", ASCENDING)])
+\end{lstlisting}
+
+% ---------------------------------------------------------------
+% IMAGE 5 — Capture de mongosh montrant les collections et un findOne()
+% Lancer : docker exec -it mongodb mongosh
+% Taper : use energy_project
+%         show collections
+%         db.spark_district_consumption.findOne()
+% et capturer le résultat
+% ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.9\textwidth]{collections_mongodb.png}
+    \caption{Collections MongoDB de la base \texttt{energy\_project} et exemple de document}
+    \label{fig:mongodb_collections}
+\end{figure}
+
+% ---------------------------------------------------------------
+% IMAGE 6 — Capture de mongosh montrant le résultat de l'agrégation
+% Taper dans mongosh :
+% db.spark_district_consumption.aggregate([
+%   { $group: { _id: "$district",
+%     total_kwh: { $sum: "$total_energy_consumption" },
+%     cycles: { $sum: 1 } }},
+%   { $sort: { total_kwh: -1 } }
+% ])
+% et capturer les résultats classés par consommation
+% ---------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.9\textwidth]{Requete.png}
+    \caption{Résultat d'une requête d'agrégation MongoDB — consommation totale par quartier}
+    \label{fig:mongodb_aggregation}
+\end{figure}
+
+\section{Flux complet des données dans MongoDB}
+
+La figure suivante résume le flux complet de données entre Kafka, Spark et MongoDB,
+montrant comment les données brutes sont transformées en résultats exploitables
+par le dashboard et les modèles ML/NLP :
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, draw, rounded corners, minimum width=3.5cm,
+                minimum height=0.9cm, text centered, font=\small},
+    arrow/.style={->, thick}
+]
+% Nœuds
+\node[box, fill=orange!20]  (kafka)   {Kafka Topics};
+\node[box, fill=blue!15,    right=2cm of kafka]  (spark)   {Spark Streaming};
+\node[box, fill=green!15,   below=1cm of spark]  (consumer){Kafka Consumer};
+\node[box, fill=gray!15,    right=2cm of spark]  (mongo)   {MongoDB};
+\node[box, fill=purple!15,  below=1cm of mongo]  (analytics){Analytics Job};
+\node[box, fill=yellow!20,  right=2cm of mongo]  (dash)    {Dashboard};
+
+% Flèches
+\draw[arrow] (kafka)    -- node[above, font=\tiny]{stream} (spark);
+\draw[arrow] (kafka)    -- node[left,  font=\tiny]{raw}    (consumer);
+\draw[arrow] (spark)    -- node[above, font=\tiny]{processed} (mongo);
+\draw[arrow] (consumer) -- node[below, font=\tiny]{raw}    (mongo);
+\draw[arrow] (mongo)    -- node[right, font=\tiny]{ML/NLP} (analytics);
+\draw[arrow] (analytics)-- (mongo);
+\draw[arrow] (mongo)    -- node[above, font=\tiny]{read}   (dash);
+\end{tikzpicture}
+\caption{Flux complet des données entre Kafka, Spark et MongoDB}
+\label{fig:data_flow}
+\end{figure}
+
+
+%part Errahmouni
+
+
+\chapter{Data Quality Framework}
+
+\section{Introduction et contexte}
+
+La qualit\'{e} des donn\'{e}es constitue un enjeu fondamental dans tout pipeline Big Data, particuli\`{e}rement dans un contexte de traitement en temps r\'{e}el. Dans le cadre du projet \textit{Tetouan Smart Energy}, les donn\'{e}es brutes proviennent de \textbf{91\,000 compteurs intelligents} (smart meters) r\'{e}partis sur \textbf{18 quartiers} de la ville de T\'{e}touan. Ces donn\'{e}es transitent en continu via Apache Kafka avant d'\^{e}tre trait\'{e}es par Apache Spark Structured Streaming.
+
+Le \textit{Data Quality Framework} (DQF) mis en place dans ce projet est enti\`{e}rement int\'{e}gr\'{e} au job Spark, ce qui permet d'appliquer les r\`{e}gles de qualit\'{e} \textit{au fil de l'eau}, c'est-\`{a}-dire au moment m\^{e}me de l'ingestion, sans post-traitement diff\'{e}r\'{e}.
+
+\begin{infobox}
+\begin{itemize}[noitemsep]
+  \item D\'{e}tecter les valeurs manquantes dans les champs obligatoires
+  \item Identifier les mesures physiquement incoh\'{e}rentes (tension, courant, \'{e}nergie)
+  \item Calculer un score de qualit\'{e} par cycle de lecture
+  \item Produire des rapports de biais par district et par type de zone
+  \item Assurer la tra\c{c}abilit\'{e} des anomalies dans MongoDB
+\end{itemize}
+\end{infobox}
+
+\section{Architecture du module de qualit\'{e}}
+
+\subsection{Positionnement dans le pipeline global}
+
+Le DQF s'ins\`{e}re directement dans le flux de traitement Spark, entre la r\'{e}ception des messages Kafka et l'agr\'{e}gation par district.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{Screenshot 2026-05-18_220707.png}
+    \caption{ Position du Data Quality Framework dans le pipeline Spark Streaming}
+\end{figure}
+
+\subsection{Sch\'{e}ma des donn\'{e}es entrantes}
+
+Le sch\'{e}ma Spark d\'{e}finit la structure attendue pour chaque message Kafka provenant des compteurs. Le tableau~\ref{tab:schema_meters} pr\'{e}sente les champs et leurs types.
+
+\begin{table}[H]
+\centering
+\caption{Sch\'{e}ma Spark des lectures de compteurs intelligents}
+\label{tab:schema_meters}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|l|l|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Champ} & \textbf{Type Spark} & \textbf{Nullable} & \textbf{Description} \\
+\hline
+\texttt{level} & StringType & Oui & Niveau hi\'{e}rarchique (\textit{meter}) \\
+\texttt{cycle\_id} & IntegerType & Oui & Identifiant du cycle de lecture \\
+\texttt{city} & StringType & Oui & Ville (T\'{e}touan) \\
+\texttt{meter\_id} & StringType & Oui & Identifiant unique du compteur \\
+\texttt{distributor\_id} & StringType & Oui & Identifiant du distributeur \\
+\texttt{concentrator\_id} & StringType & Oui & Identifiant du concentrateur \\
+\texttt{district} & StringType & Oui & Quartier d'appartenance \\
+\texttt{zone\_type} & StringType & Oui & Type de zone (r\'{e}sidentiel, industriel[U+2026]) \\
+\texttt{latitude} & DoubleType & Oui & Latitude GPS \\
+\texttt{longitude} & DoubleType & Oui & Longitude GPS \\
+\texttt{energy\_consumption} & DoubleType & Oui & Consommation en kWh \\
+\texttt{voltage} & DoubleType & Oui & Tension en Volts \\
+\texttt{current} & DoubleType & Oui & Courant en Amp\`{e}res \\
+\texttt{status} & StringType & Oui & Statut du compteur \\
+\texttt{timestamp} & StringType & Oui & Horodatage de la lecture \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{R\`{e}gles de qualit\'{e} impl\'{e}ment\'{e}es}
+
+
+
+\subsection{V\'{e}rification des champs obligatoires}
+
+La premi\`{e}re r\`{e}gle d\'{e}tecte les enregistrements dont les champs critiques sont \texttt{NULL}. Huit champs sont consid\'{e}r\'{e}s comme obligatoires :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{Screenshot 2026-05-18 221850.png}
+    \caption{Détection des valeurs manquantes dans le job Spark}
+\end{figure}
+
+\subsection{Validation des plages physiques}
+
+Les mesures physiques doivent respecter des plages coh\'{e}rentes avec la r\'{e}alit\'{e} du r\'{e}seau \'{e}lectrique de T\'{e}touan. Trois r\`{e}gles couvrent la tension, le courant et l'\'{e}nergie.
+
+\begin{table}[H]
+\centering
+\caption{R\`{e}gles de validation des plages physiques}
+\label{tab:validation_rules}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|l|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Indicateur} & \textbf{Colonne DQF} & \textbf{Plage valide} & \textbf{Justification} \\
+\hline
+Tension & \texttt{invalid\_voltage} & $[170\,\text{V},\ 250\,\text{V}]$ & Tol\'{e}rance $\pm$10\% autour de 220\,V (norme EU) \\
+Courant & \texttt{invalid\_current} & $[0\,\text{A},\ 200\,\text{A}]$ & Limite maximale des compteurs triphas\'{e}s \\
+\'{E}nergie & \texttt{invalid\_energy} & $[0\,\text{kWh},\ 10\,\text{kWh}]$ & Limite physique par pas de 15 minutes \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{Screenshot 2026-05-18 222158.png}
+    \caption{ Validation de la tension et du courant}
+\end{figure}
+
+\subsection{Coh\'{e}rence physique de l'\'{e}nergie}
+
+La r\`{e}gle la plus sophistiqu\'{e}e v\'{e}rifie la \textbf{coh\'{e}rence physique} entre la consommation d\'{e}clar\'{e}e et la valeur calcul\'{e}e \`{a} partir de la tension et du courant. La formule appliqu\'{e}e est :
+
+\begin{equation}
+  E_{\text{attendue}} = \frac{V \times I}{1000} \times 0.25
+  \label{eq:energy_expected}
+\end{equation}
+
+o\`{u} $V$ est la tension (V), $I$ le courant (A), et $0.25$ repr\'{e}sente le pas de temps de 15 minutes exprim\'{e} en heures. Un enregistrement est marqu\'{e} \texttt{inconsistent\_energy} si l'\'{e}cart absolu d\'{e}passe 0.5 kWh :
+
+\begin{equation}
+  |E_{\text{mesur\'{e}e}} - E_{\text{attendue}}| > 0.5 \Rightarrow \texttt{inconsistent\_energy} = 1
+  \label{eq:energy_consistency}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im1.png}
+    \caption{ Calcul et vérification de la cohérence énergétique}
+\end{figure}
+
+\subsection{Indicateur global de validit\'{e}}
+
+Un champ synth\'{e}tique \texttt{invalid\_record} combine toutes les r\`{e}gles pr\'{e}c\'{e}dentes :
+
+\begin{equation}
+  \texttt{invalid\_record} = \bigvee_{i} \texttt{rule}_i
+  \label{eq:invalid}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im2.png}
+    \caption{ Calcul de l’indicateur global d’invalidité}
+\end{figure}
+
+\section{Agr\'{e}gations et m\'{e}triques de qualit\'{e}}
+
+
+
+\subsection{Score de qualit\'{e} par cycle}
+
+Le score de qualit\'{e} global est calcul\'{e} \`{a} l'\'{e}chelle de chaque cycle de lecture selon :
+
+\begin{equation}
+  \text{Quality Score} = 100 - \left(\frac{N_{\text{invalid}}}{N_{\text{total}}}\right) \times 100
+  \label{eq:quality_score}
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{Interpr\'{e}tation du Quality Score}
+\label{tab:quality_levels}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Score} & \textbf{Statut} & \textbf{Action recommand\'{e}e} \\
+\hline
+$\geq 98\%$ & \textcolor{successgreen}{\textbf{Excellent}} & Aucune \\
+$[95\%, 98\%)$ & \textcolor{blue}{\textbf{Good}} & Surveillance passive \\
+$[90\%, 95\%)$ & \textcolor{accentorange}{\textbf{Acceptable}} & Revue des sources d'anomalie \\
+$< 90\%$ & \textcolor{warningred}{\textbf{Poor}} & Intervention imm\'{e}diate \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Rapport de biais par district}
+
+Le DQF g\'{e}n\`{e}re un rapport de biais permettant d'identifier les quartiers sur- ou sous-repr\'{e}sent\'{e}s dans les donn\'{e}es. Les m\'{e}triques cl\'{e}s sont :
+
+\begin{itemize}
+  \item \textbf{meter\_share\_percent} : Part du quartier dans le total des compteurs
+  \item \textbf{overload\_rate\_percent} : Taux de compteurs en \'{e}tat de surcharge
+  \item \textbf{voltage\_drop\_rate\_percent} : Taux de compteurs en chute de tension
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im3.png}
+    \caption{Distribution illustrative des taux d’anomalies par district (données simulées)}
+\end{figure}
+
+
+
+
+\section{Stockage dans MongoDB}
+
+Les r\'{e}sultats du DQF sont persist\'{e}s dans deux collections MongoDB :
+
+\begin{table}[H]
+\centering
+\caption{Collections MongoDB d\'{e}di\'{e}es \`{a} la qualit\'{e} des donn\'{e}es}
+\label{tab:mongo_dqf}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Collection} & \textbf{Contenu} \\
+\hline
+\texttt{spark\_quality\_reports} & M\'{e}triques agr\'{e}g\'{e}es par cycle : total enregistrements, distinct meters, missing/invalid counts, quality score, quality status \\
+\texttt{spark\_district\_consumption} & Donn\'{e}es agr\'{e}g\'{e}es par district avec champs DQF int\'{e}gr\'{e}s (invalid\_record\_count, quality\_score, district\_status) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{resultbox}Bilan du Data Quality Framework
+
+Le DQF traite en temps r\'{e}el jusqu'\`{a} \textbf{91\,000 lectures/cycle} et produit :
+\begin{itemize}[noitemsep]
+  \item 5 r\`{e}gles de qualit\'{e} appliqu\'{e}es par enregistrement
+  \item Un rapport de qualit\'{e} agr\'{e}g\'{e} par cycle (stock\'{e} dans MongoDB)
+  \item Un rapport de biais par district et type de zone
+  \item Un score de qualit\'{e} class\'{e} sur 4 niveaux (Excellent [U+2192] Poor)
+\end{itemize}
+\end{resultbox}
+
+
+
+\chapter{Mod\'{e}lisation Machine Learning}
+\label{chap:ml}
+
+\section{Introduction}
+
+La mod\'{e}lisation Machine Learning (ML) du projet vise \`{a} pr\'{e}dire la \textbf{consommation \'{e}nerg\'{e}tique} des quartiers de T\'{e}touan pour le prochain cycle de lecture. Cette capacit\'{e} pr\'{e}dictive permet aux op\'{e}rateurs du r\'{e}seau d'anticiper les pics de charge et d'allouer les ressources de mani\`{e}re proactive.
+
+Le pipeline ML est impl\'{e}ment\'{e} dans le module \texttt{analytics\_job} et s'ex\'{e}cute de mani\`{e}re p\'{e}riodique (toutes les 120 secondes par d\'{e}faut), en r\'{e}cup\'{e}rant les donn\'{e}es agr\'{e}g\'{e}es stock\'{e}es dans MongoDB par Spark.
+
+\section{Architecture du pipeline ML}
+
+\subsection{Vue d'ensemble}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im4.png}
+    \caption{Pipeline complet du module Machine Learning}
+\end{figure}
+
+\subsection{Sources de donn\'{e}es}
+
+Les donn\'{e}es d'entra\^{i}nement proviennent de la collection \texttt{spark\_district\_consumption}, aliment\'{e}e en continu par le job Spark. Le tableau~\ref{tab:ml_features} d\'{e}taille les features utilis\'{e}es.
+
+\begin{table}[H]
+\centering
+\caption{Features utilis\'{e}es pour la pr\'{e}diction de consommation \'{e}nerg\'{e}tique}
+\label{tab:ml_features}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|l|l|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Feature} & \textbf{Type} & \textbf{Encodage} & \textbf{Description} \\
+\hline
+\texttt{cycle\_id} & Num\'{e}rique & Passthrough & Identifiant temporel du cycle \\
+\texttt{district} & Cat\'{e}goriel & OneHotEncoder & Quartier (18 modalit\'{e}s) \\
+\texttt{zone\_type} & Cat\'{e}goriel & OneHotEncoder & Type de zone (r\'{e}sidentiel, industriel[U+2026]) \\
+\texttt{avg\_voltage} & Num\'{e}rique & Passthrough & Tension moyenne du quartier (V) \\
+\texttt{avg\_current} & Num\'{e}rique & Passthrough & Courant moyen du quartier (A) \\
+\texttt{total\_meters} & Num\'{e}rique & Passthrough & Nombre de compteurs actifs \\
+\texttt{overload\_count} & Num\'{e}rique & Passthrough & Nombre de compteurs en surcharge \\
+\texttt{voltage\_drop\_count} & Num\'{e}rique & Passthrough & Nombre de compteurs en chute de tension \\
+\texttt{hour} & Num\'{e}rique & Passthrough & Heure de la journ\'{e}e (0--23) \\
+\texttt{dayofweek} & Num\'{e}rique & Passthrough & Jour de la semaine (0--6) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\textbf{Variable cible} : \texttt{total\_energy\_consumption} --- consommation totale du quartier en kWh pour un cycle de lecture.
+
+\section{Pr\'{e}traitement et ing\'{e}nierie des features}
+
+\subsection{Extraction des features temporelles}
+
+Les features \texttt{hour} et \texttt{dayofweek} sont extraites du champ \texttt{processed\_at}, permettant au mod\`{e}le d'apprendre des patterns temporels (pointes du soir, week-end vs semaine) :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im5.png}
+    \caption{Extraction des features temporelles}
+\end{figure}
+
+\subsection{Pr\'{e}processeur Scikit-learn}
+
+Un \texttt{ColumnTransformer} applique un traitement diff\'{e}renci\'{e} selon la nature des features :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{img6.png}
+    \caption{Configuration du ColumnTransformer}
+\end{figure}
+
+\section{Mod\`{e}les entra\^{i}n\'{e}s}
+
+Trois mod\`{e}les de r\'{e}gression sont entra\^{i}n\'{e}s simultan\'{e}ment lors de chaque ex\'{e}cution du pipeline, permettant une comparaison syst\'{e}matique de leurs performances.
+
+\subsection{R\'{e}gression Lin\'{e}aire}
+
+La r\'{e}gression lin\'{e}aire constitue le mod\`{e}le de r\'{e}f\'{e}rence (\textit{baseline}). Elle mod\'{e}lise la consommation comme une combinaison lin\'{e}aire des features :
+
+\begin{equation}
+  \hat{y} = \beta_0 + \sum_{i=1}^{p} \beta_i x_i
+  \label{eq:linear_reg}
+\end{equation}
+
+\textbf{Avantages} : Interpr\'{e}tabilit\'{e} totale, temps d'entra\^{i}nement minimal.\\
+\textbf{Limites} : Ne capture pas les relations non-lin\'{e}aires entre features.
+
+\subsection{Random Forest Regressor}
+
+Le Random Forest est un ensemble de 80 arbres de d\'{e}cision entra\^{i}n\'{e}s sur des sous-\'{e}chantillons du jeu de donn\'{e}es :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{img.jpeg}
+    \caption{Configuration du Random Forest}
+\end{figure}
+
+\textbf{Avantages} : Robustesse au bruit, capture des interactions non-lin\'{e}aires, r\'{e}sistance au surapprentissage gr\^{a}ce au bagging.\\
+\textbf{Limites} : Moins interpr\'{e}table, temps d'inf\'{e}rence plus long.
+
+\subsection{Gradient Boosting Regressor}
+
+Le Gradient Boosting construit les arbres s\'{e}quentiellement, chaque arbre cherchant \`{a} corriger les erreurs du pr\'{e}c\'{e}dent :
+
+\begin{equation}
+  F_m(x) = F_{m-1}(x) + \nu \cdot h_m(x)
+  \label{eq:boosting}
+\end{equation}
+
+o\`{u} $\nu$ est le taux d'apprentissage et $h_m$ l'arbre faible \`{a} l'it\'{e}ration $m$.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{img7.png}
+    \caption{Configuration du Gradient Boosting}
+\end{figure}
+
+\textbf{Avantages} : Pr\'{e}cision \'{e}lev\'{e}e, bien adapt\'{e} aux donn\'{e}es tabulaires.\\
+\textbf{Limites} : Entra\^{i}nement s\'{e}quentiel (plus lent), sensible aux hyperparam\`{e}tres.
+
+\section{Entra\^{i}nement et \'{e}valuation}
+
+\subsection{Strat\'{e}gie de division train/test}
+
+La division est adaptative selon la taille du jeu de donn\'{e}es :
+
+\begin{equation}
+  \text{test\_size} = \begin{cases} 25\% & \text{si } N \geq 40 \\ 30\% & \text{si } N < 40 \end{cases}
+  \label{eq:split}
+\end{equation}
+
+\subsection{M\'{e}triques d'\'{e}valuation}
+
+Trois m\'{e}triques compl\'{e}mentaires sont calcul\'{e}es pour chaque mod\`{e}le :
+
+\begin{table}[H]
+\centering
+\caption{M\'{e}triques d'\'{e}valuation des mod\`{e}les de r\'{e}gression}
+\label{tab:metrics_def}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{M\'{e}trique} & \textbf{Formule} & \textbf{Interpr\'{e}tation} \\
+\hline
+MAE & $\frac{1}{n}\sum|\hat{y}_i - y_i|$ & Erreur absolue moyenne en kWh. Robuste aux valeurs extr\^{e}mes \\
+RMSE & $\sqrt{\frac{1}{n}\sum(\hat{y}_i - y_i)^2}$ & P\'{e}nalise davantage les grandes erreurs. Crit\`{e}re de s\'{e}lection \\
+R\textsuperscript{2} & $1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}}$ & Part de variance expliqu\'{e}e. 1.0 = mod\`{e}le parfait \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{R\'{e}sultats comparatifs illustratifs}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar,
+  bar width=0.5cm,
+  width=12cm, height=6cm,
+  symbolic x coords={Linear Regression, Random Forest, Gradient Boosting},
+  xtick=data,
+  xticklabel style={rotate=20, anchor=east, font=\small},
+  ylabel={Valeur de la m\'{e}trique},
+  legend style={at={(1.02,1)}, anchor=north west, font=\footnotesize},
+  ymajorgrids=true,
+  grid style=dashed,
+  title={\textbf{Comparaison des m\'{e}triques MAE et RMSE (valeurs illustratives)}},
+  title style={font=\small},
+  ymin=0, ymax=15
+]
+\addplot[fill=primaryblue!70] coordinates {
+  (Linear Regression, 8.2)
+  (Random Forest, 4.1)
+  (Gradient Boosting, 3.6)
+};
+\addplot[fill=accentorange!70] coordinates {
+  (Linear Regression, 12.4)
+  (Random Forest, 5.8)
+  (Gradient Boosting, 5.1)
+};
+\legend{MAE (kWh), RMSE (kWh)}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparaison illustrative des m\'{e}triques MAE et RMSE pour les trois mod\`{e}les}
+\label{fig:metrics_comparison}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Tableau comparatif illustratif des performances des mod\`{e}les}
+\label{tab:models_comparison}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Mod\`{e}le} & \textbf{MAE (kWh)} & \textbf{RMSE (kWh)} & \textbf{R\textsuperscript{2}} & \textbf{Train (s)} & \textbf{Inf. (ms)} \\
+\hline
+Linear Regression & 8.20 & 12.40 & 0.68 & 0.02 & 1.2 \\
+Random Forest & 4.10 & 5.80 & 0.91 & 4.35 & 3.8 \\
+\rowcolor{successgreen!15}
+\textbf{Gradient Boosting} & \textbf{3.60} & \textbf{5.10} & \textbf{0.93} & 12.70 & 1.9 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{warningbox}
+Les valeurs num\'{e}riques pr\'{e}sent\'{e}es dans les tableaux et graphiques ci-dessus sont \textbf{illustratives}, bas\'{e}es sur la nature des donn\'{e}es simul\'{e}es du projet. Les valeurs r\'{e}elles sont calcul\'{e}es dynamiquement \`{a} chaque ex\'{e}cution du pipeline en fonction du volume de donn\'{e}es disponible dans MongoDB.
+\end{warningbox}
+
+\section{S\'{e}lection automatique du meilleur mod\`{e}le}
+
+Le pipeline s\'{e}lectionne automatiquement le mod\`{e}le avec le RMSE le plus faible :
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{img8.png}
+    \caption{Sélection automatique du meilleur modèle}
+\end{figure}
+
+\section{G\'{e}n\'{e}ration des pr\'{e}dictions}
+
+\subsection{Strat\'{e}gie de pr\'{e}diction du cycle suivant}
+
+Pour chaque district, le mod\`{e}le pr\'{e}dit la consommation du cycle $n+1$ \`{a} partir des donn\'{e}es du dernier cycle $n$ observ\'{e} :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{img9.png}
+    \caption{Génération des prédictions pour le cycle suivant}
+\end{figure}
+
+\subsection{Comparaison pr\'{e}dictions vs r\'{e}alit\'{e}}
+
+Une fois le cycle pr\'{e}dit arriv\'{e}, le syst\`{e}me compare automatiquement la pr\'{e}diction \`{a} la valeur r\'{e}elle :
+
+\begin{equation}
+  \epsilon_{\text{abs}} = |y_{\text{r\'{e}el}} - \hat{y}_{\text{pr\'{e}dit}}|, \quad
+  \epsilon_{\%} = \frac{\epsilon_{\text{abs}}}{|y_{\text{r\'{e}el}}|} \times 100
+  \label{eq:comparison}
+\end{equation}
+
+Ces comparaisons sont stock\'{e}es dans la collection \texttt{ml\_prediction\_comparisons} pour le suivi longitudinal de la d\'{e}rive du mod\`{e}le (\textit{model drift}).
+
+\section{Collections MongoDB du module ML}
+
+\begin{table}[H]
+\centering
+\caption{Collections MongoDB cr\'{e}\'{e}es par le module Machine Learning}
+\label{tab:mongo_ml}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Collection} & \textbf{Contenu} \\
+\hline
+\texttt{ml\_model\_metrics} & M\'{e}triques MAE/RMSE/R\textsuperscript{2} par mod\`{e}le et par run (historique complet) \\
+\texttt{ml\_predictions} & Pr\'{e}dictions du cycle suivant par district (mis \`{a} jour \`{a} chaque run) \\
+\texttt{ml\_prediction\_comparisons} & Comparaison pr\'{e}diction vs r\'{e}el : erreur absolue et relative \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{resultbox}
+Le pipeline ML impl\'{e}ment\'{e} permet :
+\begin{itemize}[noitemsep]
+  \item Entra\^{i}nement simultan\'{e} de \textbf{3 mod\`{e}les} avec comparaison automatique
+  \item S\'{e}lection du meilleur mod\`{e}le selon le crit\`{e}re RMSE
+  \item Pr\'{e}diction de la consommation pour le \textbf{prochain cycle} sur les 18 districts
+  \item Suivi de la d\'{e}rive du mod\`{e}le par comparaison pr\'{e}diction/r\'{e}el
+  \item R\'{e}-entra\^{i}nement automatique toutes les \textbf{2 minutes}
+\end{itemize}
+\end{resultbox}
+
+% -----------------------------------------------------------------------------
+% CHAPTER 10 - ANALYSE NLP
+% -----------------------------------------------------------------------------
+\chapter{Analyse NLP des Rapports Techniques}
+\label{chap:nlp}
+
+\section{Introduction}
+
+L'analyse NLP (\textit{Natural Language Processing}) constitue la troisi\`{e}me composante analytique du projet. Elle vise \`{a} \textbf{classifier automatiquement} les rapports techniques et alertes issus de flux RSS industriels, afin de d\'{e}tecter et prioriser les \'{e}v\'{e}nements susceptibles d'impacter la distribution \'{e}lectrique dans les quartiers de T\'{e}touan.
+
+L'originalit\'{e} de cette approche r\'{e}side dans la \textbf{corr\'{e}lation crois\'{e}e} entre les \'{e}v\'{e}nements textuels classifi\'{e}s et les anomalies physiques mesur\'{e}es sur le r\'{e}seau (chutes de tension, surcharges), permettant une analyse contextuelle riche.
+
+\section{Sources de donn\'{e}es textuelles}
+
+\subsection{Production RSS}
+
+Les donn\'{e}es textuelles sont g\'{e}n\'{e}r\'{e}es par le module \texttt{rss\_producer}, qui simule un flux de d\'{e}p\^{e}ches industrielles et d'actualit\'{e}s li\'{e}es \`{a} l'\'{e}nergie. Chaque message RSS contient :
+
+\begin{table}[H]
+\centering
+\caption{Sch\'{e}ma d'un message RSS industriel}
+\label{tab:rss_schema}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Champ} & \textbf{Type} & \textbf{R\^{o}le} \\
+\hline
+\texttt{source} & String & Origine de la d\'{e}p\^{e}che \\
+\texttt{city} & String & Ville concern\'{e}e \\
+\texttt{district} & String & Quartier concern\'{e} \\
+\texttt{timestamp} & String & Horodatage \\
+\texttt{title} & String & Titre du rapport (entr\'{e}e NLP principale) \\
+\texttt{description} & String & Corps du rapport (entr\'{e}e NLP secondaire) \\
+\texttt{category} & String & Cat\'{e}gorie r\'{e}elle (label supervis\'{e}) \\
+\texttt{severity} & String & Gravit\'{e} (high / medium / low) \\
+\texttt{language} & String & Langue du rapport \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Cat\'{e}gories de classification}
+
+Le syst\`{e}me classe les rapports en 7 cat\'{e}gories couvrant l'ensemble des \'{e}v\'{e}nements \'{e}nerg\'{e}tiques pertinents :
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  cat/.style={rectangle, rounded corners=6pt, minimum width=3.2cm,
+              minimum height=0.7cm, draw, font=\small\bfseries, align=center},
+  center/.style={circle, minimum size=1.4cm, draw=primaryblue, fill=primaryblue!15,
+                 font=\small\bfseries, align=center}
+]
+\node[center] (c) {Rapport\\RSS};
+
+\node[cat, fill=warningred!20, draw=warningred, right=2.5cm of c] (inc) {incident\\(score: 0.95)};
+\node[cat, fill=orange!20, draw=accentorange, above right=1.5cm and 1.5cm of c] (mai) {maintenance\\(score: 0.70)};
+\node[cat, fill=yellow!30, draw=yellow!70!black, above=2.5cm of c] (wea) {weather\_risk\\(score: 0.65)};
+\node[cat, fill=blue!15, draw=primaryblue, above left=1.5cm and 1.5cm of c] (ind) {industrial\_activity\\(score: 0.60)};
+\node[cat, fill=purple!15, draw=purple, left=2.5cm of c] (pub) {public\_event\\(score: 0.50)};
+\node[cat, fill=green!15, draw=successgreen, below left=1.5cm and 1.5cm of c] (nor) {normal\_news\\(score: 0.10)};
+\node[cat, fill=gray!20, draw=gray, below=2.5cm of c] (unk) {unknown\\(score: 0.30)};
+
+\foreach \n in {inc, mai, wea, ind, pub, nor, unk}
+  \draw[-Stealth, thick, gray!60] (c) -- (\n);
+\end{tikzpicture}
+\caption{Cat\'{e}gories de classification NLP et leurs scores de risque de base}
+\label{fig:nlp_categories}
+\end{figure}
+
+\section{Architecture du pipeline NLP}
+
+\subsection{Pr\'{e}paration du corpus}
+
+Le texte d'entr\'{e}e est construit par concat\'{e}nation du titre et de la description de chaque rapport :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im10.png}
+    \caption{Construction du corpus textuel}
+\end{figure}
+
+
+
+\subsection{Mod\`{e}le TF-IDF + R\'{e}gression Logistique}
+
+Le mod\`{e}le NLP est une Pipeline Scikit-learn compos\'{e}e de deux \'{e}tapes :
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.2cm and 2cm,
+  pstep/.style={rectangle, rounded corners=4pt, minimum width=3.5cm,
+               minimum height=0.9cm, draw=primaryblue, fill=blue!10,
+               font=\small\bfseries, align=center},
+  arrow/.style={-Stealth, thick}
+]
+\node[pstep] (text)  {Texte brut\\(title + description)};
+\node[pstep, right=of text] (tfidf) {TF-IDF Vectorizer\\max\_features=3000\\ngram\_range=(1,2)};
+\node[pstep, right=of tfidf] (log) {Logistic Regression\\max\_iter=1000};
+\node[pstep, right=of log] (pred) {Cat\'{e}gorie pr\'{e}dite\\+ Probabilit\'{e}s};
+
+\draw[arrow] (text) -- (tfidf);
+\draw[arrow] (tfidf) -- (log);
+\draw[arrow] (log) -- (pred);
+\end{tikzpicture}
+\caption{Architecture de la pipeline NLP TF-IDF + R\'{e}gression Logistique}
+\label{fig:nlp_arch}
+\end{figure}
+
+\subsubsection{TF-IDF Vectorizer}
+
+La vectorisation TF-IDF (\textit{Term Frequency -- Inverse Document Frequency}) transforme chaque document textuel en un vecteur num\'{e}rique :
+
+\begin{equation}
+  \text{TF-IDF}(t, d, D) = \text{TF}(t, d) \times \log\!\left(\frac{|D|}{|\{d \in D : t \in d\}|}\right)
+  \label{eq:tfidf}
+\end{equation}
+
+Les param\`{e}tres configur\'{e}s sont :
+\begin{itemize}
+  \item \textbf{max\_features = 3000} : Restriction aux 3000 termes les plus discriminants
+  \item \textbf{ngram\_range = (1, 2)} : Prise en compte des unigrammes ET bigrammes (ex : ``voltage drop'', ``power outage'')
+\end{itemize}
+
+\subsubsection{R\'{e}gression Logistique Multiclasse}
+
+La r\'{e}gression logistique classifie les vecteurs TF-IDF en l'une des 7 cat\'{e}gories via une formulation \textit{softmax} :
+
+\begin{equation}
+  P(y = k \mid x) = \frac{e^{w_k^T x}}{\sum_{j=1}^{K} e^{w_j^T x}}
+  \label{eq:softmax}
+\end{equation}
+
+avec \texttt{max\_iter=1000} pour assurer la convergence sur des vocabulaires larges.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im11.png}
+    \caption{Configuration de la pipeline NLP}
+\end{figure}
+
+\section{Stratification et \'{e}valuation}
+
+\subsection{Division stratifi\'{e}e du corpus}
+
+Pour pr\'{e}server la distribution des classes dans les ensembles d'entra\^{i}nement et de test, une division stratifi\'{e}e est appliqu\'{e}e si chaque classe dispose d'au moins 2 exemples :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im12.png}
+    \caption{Division stratifiée du corpus NLP}
+\end{figure}
+
+\subsection{M\'{e}triques d'\'{e}valuation NLP}
+
+Deux m\'{e}triques sont calcul\'{e}es pour \'{e}valuer le classifieur :
+
+\begin{table}[H]
+\centering
+\caption{M\'{e}triques d'\'{e}valuation du mod\`{e}le NLP}
+\label{tab:nlp_metrics}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{M\'{e}trique} & \textbf{Formule} & \textbf{Justification} \\
+\hline
+Accuracy & $\frac{N_{\text{corrects}}}{N_{\text{total}}}$ & Taux global de classification correcte \\
+F1-Score (weighted) & $\sum_k w_k F1_k$ & \'{E}quilibre pr\'{e}cision/rappel, pond\'{e}r\'{e} par la fr\'{e}quence de classe \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{R\'{e}sultats illustratifs}
+
+\begin{table}[H]
+\centering
+\caption{Performances illustratives du mod\`{e}le NLP par cat\'{e}gorie}
+\label{tab:nlp_per_class}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Cat\'{e}gorie} & \textbf{Pr\'{e}cision} & \textbf{Rappel} & \textbf{F1} & \textbf{Support} \\
+\hline
+incident & 0.94 & 0.96 & 0.95 & 48 \\
+maintenance & 0.88 & 0.85 & 0.86 & 42 \\
+weather\_risk & 0.91 & 0.89 & 0.90 & 38 \\
+industrial\_activity & 0.85 & 0.83 & 0.84 & 31 \\
+public\_event & 0.79 & 0.81 & 0.80 & 27 \\
+normal\_news & 0.97 & 0.98 & 0.97 & 61 \\
+unknown & 0.72 & 0.68 & 0.70 & 18 \\
+\hline
+\rowcolor{gray!15}
+\textbf{Weighted avg} & \textbf{0.89} & \textbf{0.89} & \textbf{0.89} & \textbf{265} \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Calcul du score de risque}
+
+\subsection{Mod\`{e}le de risque composite}
+
+Le score de risque est calcul\'{e} pour chaque rapport en combinant la cat\'{e}gorie pr\'{e}dite et la s\'{e}v\'{e}rit\'{e} d\'{e}clar\'{e}e :
+
+\begin{equation}
+  \text{Risk Score} = \min\!\Big(\text{BaseScore}(\text{category}) \times \text{Multiplier}(\text{severity}),\; 1.0\Big)
+  \label{eq:risk}
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{Param\`{e}tres du mod\`{e}le de score de risque}
+\label{tab:risk_model}
+\begin{tabular}{cc}
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Scores de base par cat\'{e}gorie}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Cat\'{e}gorie} & \textbf{Score} \\
+\hline
+incident & 0.95 \\
+maintenance & 0.70 \\
+weather\_risk & 0.65 \\
+industrial\_activity & 0.60 \\
+public\_event & 0.50 \\
+normal\_news & 0.10 \\
+unknown & 0.30 \\
+\hline
+\end{tabular}
+\end{minipage}
+&
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Multiplicateurs de s\'{e}v\'{e}rit\'{e}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{S\'{e}v\'{e}rit\'{e}} & \textbf{Multiplicateur} \\
+\hline
+high & 1.00 \\
+medium & 0.75 \\
+low & 0.40 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{tabular}
+\end{table}
+
+\subsection{Exemple de calcul}
+
+Un incident \`{a} s\'{e}v\'{e}rit\'{e} \'{e}lev\'{e}e re\c{c}oit un score de risque maximal :
+\begin{equation*}
+  \text{Risk Score}(\text{incident, high}) = \min(0.95 \times 1.00, 1.0) = \mathbf{0.95}
+\end{equation*}
+
+Un \'{e}v\'{e}nement public \`{a} faible s\'{e}v\'{e}rit\'{e} :
+\begin{equation*}
+  \text{Risk Score}(\text{public\_event, low}) = \min(0.50 \times 0.40, 1.0) = \mathbf{0.20}
+\end{equation*}
+
+\section{Corr\'{e}lation avec les anomalies physiques}
+
+\subsection{M\'{e}canisme de corr\'{e}lation}
+
+La fonction \texttt{correlate\_with\_voltage\_drop} interroge MongoDB pour r\'{e}cup\'{e}rer l'\'{e}tat physique le plus r\'{e}cent du district mentionn\'{e} dans le rapport. Une corr\'{e}lation est \'{e}tablie si l'une des conditions suivantes est vraie :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im13.png}
+    \caption{Corrélation entre rapport NLP et état physique du district}
+\end{figure}
+\subsection{Valeur ajout\'{e}e de la corr\'{e}lation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={rectangle, rounded corners=5pt, minimum width=3.5cm,
+              minimum height=0.8cm, draw, font=\small\bfseries, align=center},
+  arrow/.style={-Stealth, thick}
+]
+\node[box, fill=blue!10, draw=primaryblue] (nlp) {Rapport RSS\\``Maintenance planifi\'{e}e\\District 5''};
+\node[box, fill=orange!10, draw=accentorange, right=3cm of nlp] (phys) {Donn\'{e}es physiques\\avg\_voltage = 205V\\voltage\_drop\_count = 3};
+\node[box, fill=red!10, draw=warningred, below=1.5cm of $(nlp)!0.5!(phys)$] (alert) {\textbf{ALERTE CORR\'{E}L\'{E}E}\\Risk Score \'{e}lev\'{e}\\+ Anomalie physique confirm\'{e}e};
+
+\draw[arrow] (nlp.south) -- ++(0,-0.7) -- (alert.north west);
+\draw[arrow] (phys.south) -- ++(0,-0.7) -- (alert.north east);
+\end{tikzpicture}
+\caption{Illustration du m\'{e}canisme de corr\'{e}lation NLP + donn\'{e}es physiques}
+\label{fig:correlation_mechanism}
+\end{figure}
+
+La combinaison de la classification textuelle et des donn\'{e}es physiques permet d'identifier des situations \`{a} risque que ni l'analyse des donn\'{e}es seule ni la veille textuelle seule ne pourraient d\'{e}tecter.
+
+\section{Structure du rapport NLP produit}
+
+Chaque rapport analys\'{e} g\'{e}n\`{e}re un document JSON riche dans MongoDB, consolidant l'information textuelle et physique :
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.8\linewidth]{im14.png}
+    \caption{Structure d’un rapport NLP stocké dans MongoDB}
+\end{figure}
+\section{Collections MongoDB du module NLP}
+
+\begin{table}[H]
+\centering
+\caption{Collections MongoDB cr\'{e}\'{e}es par le module NLP}
+\label{tab:mongo_nlp}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{primaryblue!20}
+\textbf{Collection} & \textbf{Contenu} \\
+\hline
+\texttt{nlp\_reports} & Rapports analys\'{e}s avec cat\'{e}gorie pr\'{e}dite, score de risque et corr\'{e}lation physique \\
+\texttt{nlp\_model\_metrics} & M\'{e}triques Accuracy et F1-score du mod\`{e}le TF-IDF + LR \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{resultbox}
+Le pipeline NLP impl\'{e}ment\'{e} offre :
+\begin{itemize}[noitemsep]
+  \item Classification automatique des rapports RSS en \textbf{7 cat\'{e}gories} \'{e}nerg\'{e}tiques
+  \item Mod\`{e}le TF-IDF + R\'{e}gression Logistique entra\^{i}n\'{e} sur bigrammes (3000 features)
+  \item Score de risque composite int\'{e}grant cat\'{e}gorie et s\'{e}v\'{e}rit\'{e}
+  \item Corr\'{e}lation crois\'{e}e avec les donn\'{e}es physiques du r\'{e}seau
+  \item R\'{e}-analyse continue des 100 derniers rapports toutes les \textbf{2 minutes}
+  \item Stockage structur\'{e} dans MongoDB pour exploitation par le dashboard
+\end{itemize}
+\end{resultbox}
+
+
+
+\newpage
+
+% -----------------------------------------------------------------------------
+% CHAPTER 11 -  Dashboard de Visualisation
+% -----------------------------------------------------------------------------
+\chapter{Dashboard de Visualisation}
+\label{chap:nlp}
+\section{Architecture du dashboard}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot 2026-05-20 230128.png}
+    \caption{Architecture du dashboard}
+\end{figure}
+
+\section{Panneau latéral (Sidebar)}
+
+Le panneau de contrôle gauche expose deux paramètres globaux qui filtrent l'ensemble du dashboard :
+
+\begin{itemize}
+    \item \textbf{Refresh interval} \textit{(slider 3--60 s)} : cadence d'actualisation automatique des données MongoDB.
+    
+    \item \textbf{Cycle Selection} \textit{(selectbox)} : sélection du cycle de traitement Spark à analyser.
+    
+    \item \textbf{Districts} \textit{(multiselect)} : filtre multi-districts pour isoler des zones géographiques.
+\end{itemize}
+\end{document}
